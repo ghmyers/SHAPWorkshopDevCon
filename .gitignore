@@ -1,0 +1,10 @@
+
+# Ignore virtual environments
+venv/
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store/
+cache
+logs/
+outputs/
+data/
