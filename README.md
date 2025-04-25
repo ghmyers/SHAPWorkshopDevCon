@@ -39,14 +39,14 @@ Once the Hydroshare resource has been opened within CUAHSI JupyterHub, open the 
 ![alt text](https://github.com/finnmyers96/SHAPWorkshopDevCon/blob/main/images/terminal_screenshot.png?raw=true)
 
 ### Locating the **`environment.yml` file**
-Navigate to the **`config/`** directory and copy the path of the **`environment.yml`** file.
+Copy the path of the **`environment.yml`** file in the project directory.
 ![alt text](https://github.com/finnmyers96/SHAPWorkshopDevCon/blob/main/images/yaml_file_screenshot.png?raw=true)
 
 ### Creating and activating the new Conda environment
-Open the terminal and run the command **`conda env create -f <insert path to environment.yml>`** in the terminal. This will create a conda environment called **`shap-workshop`** and download the dependencies stored in the **`environment.yml`** file. Activate this environment by running **`conda activate shap-workshop`** in the terminal.
+Open the terminal and run the command **`conda env create -f <insert path to environment.yml>`** in the terminal. This will create a conda environment called **`shap_vals`** and download the dependencies stored in the **`environment.yml`** file. Activate this environment by running **`conda activate shap_vals`** in the terminal.
 
 ### Installing Jupyter kernel from new Conda environment 
-To install a Jupyter kernel from this environment to run the shap_workshop Jupyter notebook, run the following command: **`python -m ipykernel install --user --name shap_workshop_env`**. This will create a kernel called **`shap_workshop_env`** which was installed from the **`shap-workshop`** Conda environment. 
+To install a Jupyter kernel from this environment to run the shap_workshop Jupyter notebook, run the following command: **`python -m ipykernel install --user --name shap_workshop_env`**. This will create a kernel called **`shap_workshop_env`** which was installed from the **`shap_vals`** Conda environment. 
 
 ### Selecting the kernel for the Jupyter notebook
 To configure the kernel, open the shap_workshop Jupyter notebook and select the **`shap_workshop_env`** kernel that was just installed. 
