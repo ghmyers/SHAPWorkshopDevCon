@@ -14,6 +14,8 @@ Welcome to the SHapley Additive Explanations workshop at the 2025 CIROH Dev Con 
 
 📌 **`outputs/`** → Stores generated plots, visualizations, and final results.
 
+📌 **`src/`** → Helper functions for preprocessing data and visualizing results.
+
 ---
 
 ## **Setting up CUAHSI JupyterHub**
