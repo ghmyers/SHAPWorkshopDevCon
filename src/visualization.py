@@ -413,3 +413,121 @@ def plot_all_dependence(
 
     fig.tight_layout()
     return fig, axes
+
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+from scipy import stats
+
+def shap_beeswarm_kdepoints(
+    shap_values,
+    data,
+    feature_names,
+    expected_values=None,
+    *,
+    max_display=15,
+    cmap=mpl.cm.get_cmap("coolwarm"),
+    point_size=9,
+    n_grid=200,
+    max_half_height=0.3,
+    figsize=(12, 6),
+    ax=None,
+    show=True,
+    x_min=None,
+    x_max=None,
+    colorbar=True
+):
+    """Beeswarm where the point cloud itself traces the KDE/violin shape."""
+    shap_values = np.asarray(shap_values)
+    # x_min = np.min(np.min(shap_values, axis=0)) * 1.1
+    # x_max = np.max(np.max(shap_values, axis=0)) * 1.1
+    data        = np.asarray(data)
+    if shap_values.shape != data.shape:
+        raise ValueError("`shap_values` and `data` must have identical shape.")
+
+    n_samples, n_features = shap_values.shape
+    max_display = min(max_display, n_features)
+
+    # ‑‑‑ 1. rank features
+    mean_abs = np.mean(np.abs(shap_values), axis=0)
+    feat_order = np.argsort(mean_abs)[::-1][:max_display]
+
+    # ‑‑‑ 2. colour normalisation
+    vmin = np.nanpercentile(data[:, feat_order],  0)
+    vmax = np.nanpercentile(data[:, feat_order], 100)
+    norm = mpl.colors.Normalize(vmin, vmax)
+
+    # ‑‑‑ 3. figure boiler‑plate
+    if ax is None:
+        fig, ax = plt.subplots(figsize=figsize)
+    else:
+        fig = ax.figure
+
+    # 4. loop bottom→top so most‑important ends up on top
+    for row, feat_idx in enumerate(feat_order[::-1]):
+        sv = shap_values[:, feat_idx]
+        fv = data[:,  feat_idx]
+
+        # 4a ‑ KDE on fixed grid
+        kde = stats.gaussian_kde(sv, bw_method="scott")
+        xs  = np.linspace(sv.min(), sv.max(), n_grid)
+        dens = kde(xs)
+        dens = dens / dens.max() * max_half_height
+
+        # 4b ‑ assign each sample to nearest grid point
+        bin_idx = np.searchsorted(xs, sv, side="left")
+        bin_idx = np.clip(bin_idx, 1, n_grid-1) - 1
+
+        y_off = np.zeros_like(sv)
+        for b in np.unique(bin_idx):
+            pts = np.where(bin_idx == b)[0]
+            if not len(pts):
+                continue
+            h = dens[b]
+            k = len(pts)
+            offs = np.linspace(-h, h, k)
+            ordering = np.argsort(np.abs(sv[pts]))[::-1]
+            y_off[pts[ordering]] = offs
+
+        # 4c ‑‑‑ Plot the points
+        ax.scatter(
+            sv,
+            row + y_off,
+            s=point_size,
+            c=cmap(norm(fv)),
+            alpha=0.8,
+            linewidth=0,
+            rasterized=True,
+        )
+
+    # 5. axes cosmetics
+    ax.axvline(0, color="grey", lw=0.8)
+    if expected_values is not None:
+        base = np.median(expected_values) if np.ndim(expected_values) else expected_values
+        ax.axvline(base, color="grey", lw=0.8, ls="--")
+
+    yticks = np.arange(max_display)
+    ax.set_yticks(yticks)
+    ax.set_yticklabels([feature_names[i] for i in feat_order[::-1]])
+    ax.set_ylim(-1, max_display)
+    ax.set_xlim(x_min, x_max)
+    ax.set_xlabel("SHAP value")
+    ax.grid(axis="x", ls=":", lw=0.4)
+
+    sm = mpl.cm.ScalarMappable(norm=norm, cmap=cmap)
+    if colorbar:
+        cbar = fig.colorbar(sm, ax=ax, pad=0.02)
+        cbar.outline.set_visible(False)
+
+        cbar.set_label("Feature value", rotation=270, labelpad=15)
+    
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+    ax.spines['left'].set_visible(False)
+
+
+    fig.tight_layout()
+    if show:
+        plt.show()
+    
+    return fig, ax
