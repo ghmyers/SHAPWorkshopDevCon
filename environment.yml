@@ -115,7 +115,7 @@ dependencies:
 - pyparsing
 - pyqt
 - pyqt5-sip
-- python
+- python=3.7.12
 - python-dateutil
 - python_abi
 - pytz
