@@ -115,7 +115,7 @@ dependencies:
 - pyparsing
 - pyqt
 - pyqt5-sip
-- python
+- python==3.7.12
 - python-dateutil
 - python_abi
 - pytz
@@ -241,4 +241,3 @@ dependencies:
   - ypy-websocket==0.8.4
   - zipp==3.15.0
 name: shap_vals
-prefix: /home/ghmyers/miniconda3/envs/shap_vals
