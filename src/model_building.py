@@ -197,3 +197,106 @@ def build_lstm_windows(X, y, window, stride: int = 1, drop_remainder: bool = Tru
         y_windows = np.concatenate([y_windows, np.asarray([extra_y], dtype=np.float32)], axis=0)
 
     return X_windows, y_windows
+
+
+import numpy as np, h5py, tensorflow as tf
+from tensorflow.python.keras import backend as K
+from tensorflow.keras import layers
+# from src.model_building import build_lstm
+import shap
+
+def get_lstm_shap_vals(weights_path: str, hidden_units: int, window_length:int, n_cols:int, n_batches:int, X_rs, feat_scaler, 
+                       y_scaler, shap_outpath: str, basevals_outpath: str, shap_data_outpath: str):
+    """Build LSTM model, loads in pretrained weights, calculates SHAP values for model, and saves SHAP values
+
+    Args:
+        weights_path (str): path to pretrained weights
+        hidden_units (int): number of hidden units in LSTM
+        n_batches (int): number of batches to use for shap value calculation
+        window_length (int): window length for LSTM
+        n_cols (int): number of features
+        X_rs (numpy array): feature matrix
+        feat_scaler (sklearn scaler): feature scaler
+        y_scaler (sklearn scaler): target scaler
+        shap_outpath (str): path to save SHAP values
+        basevals_outpath (str): path to save base values from SHAP
+        shap_data_outpath (str): path to save SHAP data
+    """
+    tf.compat.v1.disable_eager_execution()
+    
+    with h5py.File(weights_path, "r") as f, tf.compat.v1.Session() as sess:
+        K.set_session(sess)
+
+        model = build_lstm(window_length, n_cols, hidden_units=hidden_units)
+
+        # locate layers by type 
+        lstm_layer   = next(l for l in model.layers if isinstance(l, layers.LSTM))
+        dense_hid    = next(l for l in model.layers
+                            if isinstance(l, layers.Dense) and l.units == hidden_units)
+        dense_out    = next(l for l in model.layers
+                            if isinstance(l, layers.Dense) and l.units == 1)
+
+        mw = f["model_weights"]
+
+        # ----- LSTM weights (kernel, recurrent_kernel, bias) -----
+        g_lstm = mw["lstm"]["lstm"]["lstm_cell"]
+        lstm_w = [np.asarray(g_lstm[n][()], dtype=np.float32)
+                for n in ("kernel", "recurrent_kernel", "bias")]
+        lstm_layer.set_weights(lstm_w)
+
+        # ----- Hidden dense weights (kernel, bias) -----
+        g_dense = mw["dense"]["dense"]
+        dense_w = [np.asarray(g_dense[n][()], dtype=np.float32)
+                for n in ("kernel", "bias")]
+        dense_hid.set_weights(dense_w)
+
+        # ----- Output dense weights (kernel, bias) -----
+        g_out = mw["dense_1"]["dense_1"]
+        out_w = [np.asarray(g_out[n][()], dtype=np.float32)
+                for n in ("kernel", "bias")]
+        dense_out.set_weights(out_w)
+
+        # Get 1000 random batches
+        rng   = np.random.default_rng(42)          
+        idx   = rng.choice(len(X_rs), 1000, replace=False)
+        X_shap_lstm = X_rs[idx]
+        explainer = shap.DeepExplainer(model, X_shap_lstm, session=sess)
+        shap_vals = explainer.shap_values(X_shap_lstm)
+        
+        shap_explainer = shap.Explanation(values=shap_vals, base_values=explainer.expected_value, data=X_shap_lstm)
+
+        # Flatten shap values along the second dimension to turn (n_batches, window_length, n_features) array into (n_batches * window_length, n_features) array
+        shap_values_2d = shap_explainer[0].values.reshape(-1, shap_explainer[0].values.shape[-1]) 
+        shap_base_values_2d = shap_explainer
+        data_2d = shap_explainer.data.reshape(-1, shap_explainer.data.shape[-1])
+        
+        # Get scaler values
+        y_scaler_mean = y_scaler.mean_[0]
+        y_scaler_scale = y_scaler.scale_[0]
+        
+        # Multiply by the scaler values
+        shap_values_2d *= y_scaler_scale
+        shap_explainer.base_values *= y_scaler_scale
+
+        # Add the mean to the base values (model mean) to rescale
+        shap_explainer.base_values += y_scaler_mean
+        base_values_2d = shap_explainer.base_values
+
+        # Rescale the input data
+        data_2d = feat_scaler.inverse_transform(data_2d)
+        
+        # Save transformed data
+        np.savez(shap_data_outpath, data_2d=data_2d)
+        np.savez(basevals_outpath, base_values_2d=base_values_2d)
+        np.savez(shap_outpath, shap_values_2d=shap_values_2d)
+                
+        return shap_values_2d, base_values_2d, data_2d
+    
+def load_npz_array(path, key=None):
+    """Return the first array in a .npz, or `key` if given."""
+    obj = np.load(path, allow_pickle=True)   # returns ndarray or NpzFile
+    if isinstance(obj, np.ndarray):          # .npy disguised as .npz ?
+        return obj
+    if key is None:                          # grab the only/first member
+        key = obj.files[0]                   # e.g. 'arr_0'
+    return obj[key]
