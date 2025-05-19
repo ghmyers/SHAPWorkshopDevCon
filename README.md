@@ -14,7 +14,7 @@ Welcome to the SHapley Additive Explanations workshop at the 2025 CIROH Dev Con 
 
 📌 **`src/`** → Contains source code for the project with helper functions for data preprocessing, visualization, model building, etc.
 
-**Data** Data comes from the CAMELS and GAGESII datasets and is hosted on Hydroshare  (([available here](https://www.hydroshare.org/resource/504107925379464dab88ff5780aefb5a/))')
+**Data** Data comes from the CAMELS and GAGESII datasets and is hosted on Hydroshare  ([available here](https://www.hydroshare.org/resource/504107925379464dab88ff5780aefb5a/))'
 
 ---
 
