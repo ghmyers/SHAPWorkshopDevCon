@@ -4,21 +4,21 @@ Welcome to the SHapley Additive Explanations workshop at the 2025 CIROH Dev Con 
 
 ## 📂 Project Structure
 
-
 ### **🔹 Directory Breakdown**
-📌 **`data/`** → Stores all datasets for the project.
-
-📌 **`notebooks/`** → Jupyter notebooks for analysis, data exploration, and experimentation.
+📌 **`notebooks/`** → Jupyter notebooks for training models. The main workshop notebook is located in the main project directory.
 
 📌 **`models/`** → Pretrained machine learning models and model checkpoints.
 
-📌 **`outputs/`** → Stores generated plots, visualizations, and final results.
+📌 **`outputs/`** → Stores generated SHAP values for the LSTM model.
+
+📌 **`src/`** → Contains source code for the project with helper functions for data preprocessing, visualization, model building, etc.
 
 ---
 
-## **Setting up CUAHSI JupyterHub**
+## **Getting access to CIROH 2i2C JupyterHub Environment**
 
-[blue_text](Insert link to hydroshare here)'
+1. Request access to the staging environment here: [blue_text]([access form](https://forms.office.com/Pages/ResponsePage.aspx?id=jnIAKtDwtECk6M5DPz-8p4IIpHdEnmhNgjOa9FjrwGtUNUoyV1UxNFIzV1AyTDhTNzdOT1Q5NVlLTC4u))'
+
 1. Migrate to the upper right corner of the Resource page, click on "Open with..."
 
 ![alt text](https://github.com/finnmyers96/SHAPWorkshopDevCon/blob/main/images/hydroshare_resource.png?raw=true)
