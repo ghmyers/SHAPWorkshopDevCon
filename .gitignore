@@ -6,7 +6,9 @@ __pycache__/
 .DS_Store/
 cache
 logs/
-outputs/
+outputs/figures/
 data/
 notes/
 presentations/
+config/
+notebooks/
