@@ -17,7 +17,7 @@ Welcome to the SHapley Additive Explanations workshop at the 2025 CIROH Dev Con 
 
 ## **Getting access to CIROH 2i2C JupyterHub Environment**
 
-1. Request access to the staging environment here: [blue_text]([access form](https://forms.office.com/Pages/ResponsePage.aspx?id=jnIAKtDwtECk6M5DPz-8p4IIpHdEnmhNgjOa9FjrwGtUNUoyV1UxNFIzV1AyTDhTNzdOT1Q5NVlLTC4u))'
+1. Request access to the staging environment here: ([access form](https://forms.office.com/Pages/ResponsePage.aspx?id=jnIAKtDwtECk6M5DPz-8p4IIpHdEnmhNgjOa9FjrwGtUNUoyV1UxNFIzV1AyTDhTNzdOT1Q5NVlLTC4u))'
 
 1. Migrate to the upper right corner of the Resource page, click on "Open with..."
 
