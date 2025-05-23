@@ -20,23 +20,21 @@ Data comes from the CAMELS and GAGESII datasets and is hosted on Hydroshare  ([a
 
 ## **Getting access to CIROH 2i2C JupyterHub Environment** (Complete prior to workshop)
 
-1. Request access to the staging environment here: ([access form](https://forms.office.com/Pages/ResponsePage.aspx?id=jnIAKtDwtECk6M5DPz-8p4IIpHdEnmhNgjOa9FjrwGtUNUoyV1UxNFIzV1AyTDhTNzdOT1Q5NVlLTC4u))'
+1. Navigate to the [CIROH 2i2C Workshop Hub](https://workshop.ciroh.awi.2i2c.cloud/hub/spawn) 
 
-2. Navigate to the [CIROH 2i2C Workshop Hub](https://workshop.ciroh.awi.2i2c.cloud/hub/spawn) 
-
-3. Select the "Medium" Image size, and choose `SHAP for ML Interpretation`.
+2. Select the "Medium" Image size, and choose `SHAP for ML Interpretation`.
 <a href="https://github.com/user-attachments/assets/23143057-1dfb-4675-a9cb-23b20993f4ae">
   <img src="https://github.com/user-attachments/assets/23143057-1dfb-4675-a9cb-23b20993f4ae" width="600">
 </a>
 
-5. Click "Start", and the server should be running!
+3. Click "Start", and the server should be running!
 
-6. Once in the JupyterHub environment, open up the terminal and paste in `mv /tmp/SHAPWorkshopDevCon/ /home/jovyan/`
+4. Once in the JupyterHub environment, open up the terminal and paste in `mv /tmp/SHAPWorkshopDevCon/ /home/jovyan/`
 <a href="https://github.com/user-attachments/assets/32da97b6-3f5a-473c-89fe-db45b9c18a38">
   <img src="https://github.com/user-attachments/assets/32da97b6-3f5a-473c-89fe-db45b9c18a38" width="600">
 </a>
 
-8. You should see the workshop files populate in the directory catalogue. Open up the `shap_workshop.ipynb`.
+5. You should see the workshop files populate in the directory catalogue. Open up the `shap_workshop.ipynb`.
 
 ### The SHAP workshop notebook is now ready to be executed!
 
