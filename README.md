@@ -32,7 +32,6 @@ Data comes from the CAMELS and GAGESII datasets and is hosted on Hydroshare  ([a
 5. Click "Start", and the server should be running!
 
 6. Once in the JupyterHub environment, open up the terminal and paste in `mv /tmp/SHAPWorkshopDevCon/ /home/jovyan/`
-![image](https://github.com/user-attachments/assets/32da97b6-3f5a-473c-89fe-db45b9c18a38)
 <a href="https://github.com/user-attachments/assets/32da97b6-3f5a-473c-89fe-db45b9c18a38">
   <img src="https://github.com/user-attachments/assets/32da97b6-3f5a-473c-89fe-db45b9c18a38" width="600">
 </a>
