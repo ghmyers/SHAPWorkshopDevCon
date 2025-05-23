@@ -26,6 +26,9 @@ Data comes from the CAMELS and GAGESII datasets and is hosted on Hydroshare  ([a
 
 3. Select the "Medium" Image size, and choose `SHAP for ML Interpretation`.
 ![image](https://github.com/user-attachments/assets/23143057-1dfb-4675-a9cb-23b20993f4ae)
+<a href="https://github.com/user-attachments/assets/23143057-1dfb-4675-a9cb-23b20993f4ae">
+  <img src="https://github.com/user-attachments/assets/23143057-1dfb-4675-a9cb-23b20993f4ae" width="300">
+</a>
 
 5. Click "Start", and the server should be running!
 
