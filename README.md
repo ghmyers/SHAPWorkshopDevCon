@@ -20,11 +20,24 @@ Data comes from the CAMELS and GAGESII datasets and is hosted on Hydroshare  ([a
 
 ## **Getting access to CIROH 2i2C JupyterHub Environment** (Complete prior to workshop)
 
-1. Request access to the staging environment here: ([access form](https://forms.office.com/Pages/ResponsePage.aspx?id=jnIAKtDwtECk6M5DPz-8p4IIpHdEnmhNgjOa9FjrwGtUNUoyV1UxNFIzV1AyTDhTNzdOT1Q5NVlLTC4u))'
+1. Navigate to the [CIROH 2i2c WorkshopHub HydroShare page](https://www.hydroshare.org/resource/b76622a31f5a400480455c1fe86b34ee/), hover over the nine-dot icon in the upper right corner, and click "Add WebApp to 'Open with' list". The icon should turn green.
+<a href="https://github.com/user-attachments/assets/85a73ed6-dac8-4862-a09e-1b39a5f4b05e">
+  <img src="https://github.com/user-attachments/assets/85a73ed6-dac8-4862-a09e-1b39a5f4b05e" width="600">
+</a>
 
-2. Select the "Medium" Image size, and choose "Other" for image type, and paste: `quay.io/awiciroh/devcon25:devcon25-sha`
+2. Navigate to the [CIROH 2i2C JupyterHub](https://workshop.ciroh.awi.2i2c.cloud/hub/spawn), click the Medium server option, and select SHAP for ML Interpretation for the image. Click "Start" and the server will begin booting up.
+<a href="https://github.com/user-attachments/assets/980523e7-f259-42c3-ac6a-a787017dad25">
+  <img src="https://github.com/user-attachments/assets/980523e7-f259-42c3-ac6a-a787017dad25" width="600">
+</a>
 
-3. Click "Start", and the server should be running!
+3. Once, in the JupyterHub server, open up the terminal and paste `mv /tmp/SHAPWorkshopDevCon/ /home/jovyan/`
+<a href="https://github.com/user-attachments/assets/1d45af33-15de-4abf-8b67-f35a5a28e6f6">
+  <img src="https://github.com/user-attachments/assets/1d45af33-15de-4abf-8b67-f35a5a28e6f6" width="600">
+</a>
+
+4. You should now see the workshop files populate into the file directory on the left-hand side of your JupyterHub. Open the SHAPWorkshopDevCon folder, and click on the shap_workshop.ipynb to open up the notebook.
+<a href="https://github.com/user-attachments/assets/1b680924-d227-4e84-a52d-def2fa0dba33">
+  <img src="https://github.com/user-attachments/assets/1b680924-d227-4e84-a52d-def2fa0dba33" width="600">
 
 ### The SHAP workshop notebook is now ready to be executed!
 
